@@ -1,5 +1,4 @@
-
-const SECRET_KEY = process.env.SECRETKEY;
+import { env } from "~/env";
 import jwt from "jsonwebtoken";
 
 /**
@@ -7,7 +6,6 @@ import jwt from "jsonwebtoken";
  * @param user - Dados do usuário, como ID, nome e e-mail.
  * @returns Um token JWT válido.
  */
-
 function generateToken(user: { id: number; username: string; email: string }) {
   return jwt.sign(
     {
@@ -15,15 +13,20 @@ function generateToken(user: { id: number; username: string; email: string }) {
       username: user.username,
       email: user.email,
     },
-    SECRET_KEY,
-    { expiresIn: "3h" } 
+    env.SECRETKEY,
+    { expiresIn: "3h" }
   );
 }
 
+/**
+ * Valida o token JWT.
+ * @param token - O token JWT enviado pela requisição.
+ * @returns Os dados do usuário se o token for válido, ou null se inválido.
+ */
 function validateToken(token: string) {
   try {
     // Verifica e decodifica o token usando a chave secreta
-    const decoded = jwt.verify(token, SECRET_KEY);
+    const decoded = jwt.verify(token, env.SECRETKEY);
     return decoded as { id: number; username: string; email: string };
   } catch (error: any) {
     console.error("Token inválido:", error.message);
