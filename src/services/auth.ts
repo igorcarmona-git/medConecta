@@ -14,7 +14,7 @@ function generateToken(user: { id: number; username: string; email: string }) {
       email: user.email,
     },
     env.SECRETKEY,
-    { expiresIn: "3h" }
+    { expiresIn: "1m" }
   );
 }
 
@@ -27,6 +27,7 @@ function validateToken(token: string) {
   try {
     // Verifica e decodifica o token usando a chave secreta
     const decoded = jwt.verify(token, env.SECRETKEY);
+    console.log("Token decodificado:", decoded);
     return decoded as { id: number; username: string; email: string };
   } catch (error: any) {
     console.error("Token inválido:", error.message);

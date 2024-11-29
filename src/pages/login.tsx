@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "~/components/ui/dialog";
 import { api } from "~/utils/api";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -78,7 +79,7 @@ export default function Login() {
       {/* Formulário de Login */}
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
-          <CardTitle className="text-center text-2xl font-bold">Login</CardTitle>
+          <CardTitle className="text-center text-3xl font-bold">Login</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -108,7 +109,7 @@ export default function Login() {
             </div>
             <Button
               type="submit"
-              className="w-full py-3"
+              className="flex w-2/3 mx-auto py-3"
               disabled={loginMutation.isPending}
             >
               {loginMutation.isPending ? "Entrando..." : "Entrar"}
@@ -116,12 +117,17 @@ export default function Login() {
           </form>
           <p className="mt-4 text-center text-sm text-gray-600">
             Não tem uma conta?{" "}
-            <a
-              onClick={() => router.push("/register")}
-              className="text-blue-500 hover:underline cursor-pointer"
+            <Link href={"/register"}
+              className="font-semibold text-blue-500 hover:underline cursor-pointer"
             >
               Registre-se
-            </a>
+            </Link>
+          </p>
+          <p className="mt-8 text-center text-xs text-gray-600">
+            Esqueceu sua senha?{" "}
+            <Link href="/forgotPassword" className="font-semibold text-blue-500 hover:underline cursor-pointer">
+              Clique aqui
+            </Link>
           </p>
         </CardContent>
       </Card>
